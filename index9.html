@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Đăng ảnh có ghi chú</title>
+
+<style>
+body{
+    font-family: Arial;
+    background: linear-gradient(135deg,#4facfe,#00f2fe);
+    text-align:center;
+    padding:40px;
+}
+
+h1{
+    color:white;
+}
+
+.upload-box{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    width:350px;
+    margin:auto;
+}
+
+#gallery{
+    margin-top:30px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.post{
+    background:white;
+    margin:10px;
+    padding:10px;
+    border-radius:10px;
+    width:200px;
+}
+
+.post img{
+    width:100%;
+    border-radius:8px;
+}
+
+.caption{
+    margin-top:5px;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📸 Đăng ảnh + ghi chú</h1>
+
+<div class="upload-box">
+
+<input type="file" id="upload" accept="image/*" multiple>
+<br><br>
+
+<input type="text" id="caption" placeholder="Nhập ghi chú..." style="width:90%; padding:5px;">
+<br><br>
+
+<button onclick="postImages()">Đăng ảnh</button>
+
+</div>
+
+<div id="gallery"></div>
+
+<script>
+
+function postImages(){
+
+    const files = document.getElementById("upload").files;
+    const caption = document.getElementById("caption").value;
+    const gallery = document.getElementById("gallery");
+
+    for(let i=0;i<files.length;i++){
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+
+            const post = document.createElement("div");
+            post.className = "post";
+
+            const img = document.createElement("img");
+            img.src = e.target.result;
+
+            const text = document.createElement("div");
+            text.className = "caption";
+            text.innerText = caption;
+
+            post.appendChild(img);
+            post.appendChild(text);
+
+            gallery.appendChild(post);
+
+        }
+
+        reader.readAsDataURL(files[i]);
+
+    }
+
+}
+</script>
+
+</body>
+</html>
